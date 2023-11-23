@@ -2,27 +2,25 @@
 
 namespace Plants
 {
-    public class PlantOneBullet : MonoBehaviour
+    public class PlantOneBullet : Plant
     {
-        [SerializeField] private Bullet.Bullet bulletPrefab;
         [SerializeField] private Transform bulletSpawnPoint;
-        [SerializeField, Range(0, 10)] private float reloadTime;
-
+        
         private float _currentReloadTime;
-
-        public void Shoot()
-        {
-            if (!(_currentReloadTime < 0)) return;
-            
-            Instantiate(bulletPrefab,bulletSpawnPoint.position,Quaternion.identity);
-            _currentReloadTime = reloadTime;
-        }
 
         private void Update()
         {
             if (_currentReloadTime < 0) return;
 
             _currentReloadTime -= Time.deltaTime;
+        }
+
+        public override void Shoot()
+        {
+            if (!(_currentReloadTime < 0)) return;
+        
+            Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            _currentReloadTime = reloadTime;
         }
     }
 }
