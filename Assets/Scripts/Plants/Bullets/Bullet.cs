@@ -7,17 +7,20 @@ namespace Plants.Bullets
     {
         [SerializeField, Range(0, 10)] private float speed = 2f;
         [SerializeField] private float radius;
+
+        protected Collider[] DamageHit { get; private set; }
+
         private int _damage = 1;
 
         private void Start() => Destroy(gameObject, 8f);
 
         private void Update() => transform.Translate(Vector3.forward * (speed * Time.deltaTime));
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            var damage = Physics.OverlapSphere(transform.position, radius);
+            DamageHit = Physics.OverlapSphere(transform.position, radius);
 
-            foreach (var hit in damage)
+            foreach (var hit in DamageHit)
             {
                 if (hit.TryGetComponent(out Death death))
                 {
