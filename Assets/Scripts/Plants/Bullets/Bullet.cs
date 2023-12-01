@@ -1,6 +1,7 @@
+using Deaths;
 using UnityEngine;
 
-namespace Bullet
+namespace Plants.Bullets
 {
     public class Bullet : MonoBehaviour
     {
@@ -15,14 +16,13 @@ namespace Bullet
         private void OnTriggerEnter(Collider other)
         {
             var damage = Physics.OverlapSphere(transform.position, radius);
-            
+
             foreach (var hit in damage)
             {
                 if (hit.TryGetComponent(out Death death))
                 {
                     death.ApplyDamage(_damage);
                     Destroy(gameObject);
-                    Debug.Log(death.ShowHealth());
                 }
             }
         }

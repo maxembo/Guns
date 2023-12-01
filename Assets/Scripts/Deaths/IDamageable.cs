@@ -1,4 +1,7 @@
-interface IDamageable
+namespace Deaths
 {
-    void ApplyDamage(int damageValue);
+    public interface IDamageable
+    {
+        void ApplyDamage(int damageValue);
+    }
 }

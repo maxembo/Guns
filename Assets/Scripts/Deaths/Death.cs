@@ -1,27 +1,31 @@
+using Deaths;
 using UnityEngine;
 
-public class Death : MonoBehaviour, IDamageable
+namespace Deaths
 {
-    [SerializeField] private int maxHealth;
-    private const int HealthAtDeath = 0;
-    private int _currentHealth;
-
-    private void Start() => _currentHealth = maxHealth;
-
-    public int ShowHealth()
+    public class Death : MonoBehaviour, IDamageable
     {
-        return _currentHealth;
-    }
-    public void ApplyDamage(int damageValue)
-    {
-        _currentHealth -= damageValue;
+        [SerializeField] private int maxHealth;
+        private const int HealthAtDeath = 0;
+        private int _currentHealth;
 
-        HealthForDestroy();
-    }
+        private void Start() => _currentHealth = maxHealth;
 
-    private void HealthForDestroy()
-    {
-        if (_currentHealth > HealthAtDeath) return;
-        Destroy(gameObject);
+        public int ShowHealth()
+        {
+            return _currentHealth;
+        }
+        public void ApplyDamage(int damageValue)
+        {
+            _currentHealth -= damageValue;
+
+            HealthForDestroy();
+        }
+
+        private void HealthForDestroy()
+        {
+            if (_currentHealth > HealthAtDeath) return;
+            Destroy(gameObject);
+        }
     }
 }

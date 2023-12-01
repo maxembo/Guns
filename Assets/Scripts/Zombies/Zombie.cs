@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Zombie
+namespace Zombies
 {
     public abstract class Zombie : MonoBehaviour
     {
