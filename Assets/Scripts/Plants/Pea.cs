@@ -5,22 +5,24 @@ namespace Plants
     public class Pea : Plant
     {
         [SerializeField] private Transform bulletSpawnPoint;
-        
-        private float _currentReloadTime;
+
+        private const float FinishedTime = 0f; 
+        private float _currentReloadTimer;
+
 
         private void Update()
         {
-            if (_currentReloadTime < 0) return;
+            if (_currentReloadTimer < FinishedTime) return;
 
-            _currentReloadTime -= Time.deltaTime;
+            _currentReloadTimer -= Time.deltaTime;
         }
 
         public override void Shoot()
         {
-            if (!(_currentReloadTime < 0)) return;
+            if (_currentReloadTimer > FinishedTime) return;
         
-            Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            _currentReloadTime = reloadTime;
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            _currentReloadTimer = reloadTime;
         }
     }
 }

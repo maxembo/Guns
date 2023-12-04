@@ -7,30 +7,33 @@ namespace Plants
     {
         [SerializeField] private Transform bulletSpawnPoint;
 
+        private const float FinishedTime = 0f;
         private const int MaxCountBullet = 4;
-        private float _currentReloadTime;
+        private const float FireRate = 0.2f;
+
+        private float _currentReloadTimer;
 
         private void Update()
         {
-            if (_currentReloadTime < 0) return;
+            if (_currentReloadTimer < FinishedTime) return;
 
-            _currentReloadTime -= Time.deltaTime;
+            _currentReloadTimer -= Time.deltaTime;
         }
 
         public override void Shoot()
         {
-            if (!(_currentReloadTime < 0)) return;
+            if (_currentReloadTimer > FinishedTime) return;
 
             StartCoroutine(SpawnBullet());
-            _currentReloadTime = reloadTime;
+            _currentReloadTimer = reloadTime;
         }
 
         private IEnumerator SpawnBullet()
         {
             for (int currentBullet = 0; currentBullet < MaxCountBullet; currentBullet++)
             {
-                Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
+                var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+                yield return new WaitForSeconds(FireRate);
             }
         }
     }
